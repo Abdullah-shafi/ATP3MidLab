@@ -65,7 +65,34 @@ router.get('/adduser', function(req, res){
 	});
 })
 
+router.get('/editmedicine/:id', function(req, res){
+	
+	userModel.getById_medicine(req.params.id, function(result){
+		res.render('home/editmedicine', {user1: result});
+	});
+})
 
+router.post('/editmedicine/:id', function(req, res){
+	
+	var user1 = {
+
+		name: req.body.name,
+		category: req.body.catagory,
+		quantity: req.body.quantity,
+		type: req.body.type,
+		price: req.body.price,
+		vendorname: req.body.vendorname,
+		id: req.params.id
+	};
+
+	userModel.update(user, function(status){
+		if(status){
+			res.redirect('/home/allmedicine');
+		}else{
+			res.redirect('/home/editmedicine/'+req.params.id);
+		}
+	});
+})
 
 router.get('/add/:id', function(req, res){
 	
@@ -134,16 +161,19 @@ router.get('/addmedicine', function(req, res){
 })
 
 router.post('/addmedicine', function(req, res){
-		var user = {
-		product_name: req.body.name,
+		var user1 = {
+		name: req.body.name,
+		category: req.body.catagory,
 		quantity: req.body.quantity,
+		type: req.body.type,
 		price: req.body.price,
+		vendorname: req.body.vendorname
 
 		
 	};
-		userModel.pi(user, function(status){
+		userModel.insert(user1, function(status){
 			if(status){
-				res.redirect('/home/viewmedicine');
+				res.redirect('/home/allmedicine');
 			}else{
 				res.redirect('/home/addmedicine');
 			}
@@ -157,6 +187,15 @@ router.get('/allmedicine', function(req, res){
 	userModel.getAll3(function(results){
 		if(results.length > 0){
 			res.render('home/allmedicine', {userlist: results});
+		}else{
+			res.send('invalid username/password');
+		}
+	});
+})
+router.get('/viewmedicine', function(req, res){
+	userModel.getAll3(function(results){
+		if(results.length > 0){
+			res.render('home/viewmedicine', {userlist: results});
 		}else{
 			res.send('invalid username/password');
 		}

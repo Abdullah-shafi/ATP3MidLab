@@ -63,11 +63,11 @@ password: req.body.password,
 contact: req.body.contact,
 type: req.body.type
 };
-userModel.insert(user, function(status){
+userModel.insertreg(user, function(status){
 	if(status){
-		res.redirect('login');
+		res.redirect('/login');
 	}else{
-		res.redirect('reg');
+		res.redirect('/login/reg');
 	}
 });
 //res.send('login successful');

@@ -9,11 +9,10 @@
 	</div>
 
 	<a href="/home"> Back</a> |
-	<a href="/home/addmedicine"> Add Medicine</a> |
 	<a href="/logout"> logout</a><br>
 	
 	
-	
+	<input type="text" name="" id="myInput" placeholder="Medicine Name" onkeyup="searchFun()"> <br> <br>
 	<table id="medicine" border="1">
 		<tr>
 			<td>ID</td>
@@ -40,11 +39,43 @@
 
 			<td>
 				 
-				<a href="/home/editmedicine/<%= userlist[i].product_id %>">Edit</a> |  
-				<a href="/home/deletemedicine/<%= userlist[i].product_id %>">DELETE</a>  
+				<a href="/home/cart/<%= userlist[i].product_id %>">Add To Cart</a>  
+				  
 			</td>
 		</tr>
 		<% } %>
 	</table>
+
+	<script>
+		function searchFun(){
+			let filter = document.getElementById('myInput').value.toUpperCase();
+			
+			let myTable=document.getElementById('medicine');
+			
+			let tr=myTable.getElementsByTagName('tr');
+			
+			for(var i=0; i<tr.length;i++){
+				let td = tr[i].getElementsByTagName('td')[1];
+				
+				if(td){
+					let textvalue= td.textContent||td.innerHTML;
+					if(textvalue.toUpperCase().indexOf(filter)>-1){
+						tr[i].style.display="";
+						
+					}else{
+						
+						tr[i].style.display="none";
+						//alert("Not found!");
+					}
+					
+				}
+				
+				
+			}
+			
+			
+		}
+		</script>
+
 	
 </html>

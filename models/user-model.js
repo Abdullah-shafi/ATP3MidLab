@@ -78,20 +78,21 @@ module.exports ={
 			}
 		});
 	},
-	vp:function(callback){
-		
-		var sql = "select * from product";
-		db.getResult(sql, null, function(results){
-			if(results.length > 0){
-				callback(results);
+	
+	insert: function(user1, callback){
+		var sql = "insert into  medicine (product_name,p_category,product_qty,product_type,price,vendor_name) values(?,?,?,?,?,?)" ;
+		db.execute(sql, [ user1.name, user1.category,user1.quantity,user1.type, user1.price,user1.vendorname], function(status){
+			if(status){
+				callback(true);
 			}else{
-				callback(null);
+				callback(false);
 			}
 		});
 	},
-	insert: function(user, callback){
-		var sql = "insert into  user (username,uname,password,contact,type) values(?,?,?,?,?)" ;
-		db.execute(sql, [ user.username, user.uname,user.password,user.contact, user.type], function(status){
+	insertreg: function(user, callback){
+		var  num=0;
+		var sql = "insert into  user (username,password,type,contact,num) values(?,?,?,?,?)" ;
+		db.execute(sql, [user.username,user.password,user.type,user.contact,num], function(status){
 			if(status){
 				callback(true);
 			}else{
@@ -143,20 +144,10 @@ module.exports ={
 			}
 		});
 	},
-	pi: function(user, callback){
-		var sql = "insert into  product (product_name,quantity,price) values(?,?,?)";
-		db.execute(sql, [user.product_name, user.quantity,user.price], function(status){
-			if(status){
-				callback(true);
-			}else{
-				callback(false);
-			}
-		});
-	},
-
-   epu: function(user, callback){
-		var sql = "update product set product_name=?,quantity=?,price=? where id=?";
-		db.execute(sql, [user.product_name, user.quantity,user.price,user.id], function(status){
+	update3: function(user1, callback){
+		var sql = "update medicine set product_name=?,p_category=?,product_qty=?,product_type=?,price=?,vendor_name=? where id=?";
+	
+		db.execute(sql, [user1.name, user1.category,user1.quantity,user1.type,user1.price,user1.vendorname,user1.id], function(status){
 			if(status){
 				callback(true);
 			}else{
