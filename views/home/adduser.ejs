@@ -1,93 +1,42 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<title>Edit page</title>
+	<title>Customer Page</title>
 </head>
-
 <body>
 	<div>
-		<h1>Edit Info</h1>
+		<h1>Customer Requset</h1> 		
 	</div>
 
-	<a href="/home/alluser"> Back to List</a> |
+	<a href="/home"> Back </a> |
+	<a href="/home/alluser"> AllCustomer</a> |
 	<a href="/logout"> logout</a><br>
-
-	<form method="post">
-		<table>
-
-			<tr>
-				<td>Name</td>
-				<td><input type="text" name="username" value=""><br>
-					<%if(typeof errors != "undefined"){%>
-					<% errors.forEach(function(err){ %>
-					<% if(err.param == 'username') {%>
-						<%= err.msg %>
-						<% } %>
-					 <% }); %>
-					<% } %></td>
-					
-
-				
-
-			</tr>
-			<tr>
-				<td>Uname:</td>
-				<td><input type="text" name="uname" value=""><br><%if(typeof errors != "undefined"){%>
-					<% errors.forEach(function(err){ %>
-					<% if(err.param == 'uname') {%>
-						<%= err.msg %>
-						<% } %>
-					 <% }); %>
-					<% } %></td>
+	
+	
+	
+	<table id="customers" border="1">
+		<tr>
+			<td>ID</td>
+			<td>CustomerName</td>
+			<td>Password</td>
+			<td>Type</td>
+			<td>contact no</td>
+			<td>Action</td>
 			
-			
-			</tr>
-			<tr>
-				<td>Password :</td>
-				<td><input type="password" name="password" value=""><br><%if(typeof errors != "undefined"){%>
-					<% errors.forEach(function(err){ %>
-					<% if(err.param == 'password') {%>
-						<%= err.msg %>
-						<% } %>
-					 <% }); %>
-					<% } %></td>
-			
-			
-			</tr>
-			<tr>
-				<td>Contact:</td>
-				<td><input type="text" name="contact" value=""><br><%if(typeof errors != "undefined"){%>
-					<% errors.forEach(function(err){ %>
-					<% if(err.param == 'contact') {%>
-						<%= err.msg %>
-						<% } %>
-					 <% }); %>
-					<% } %></td>
-			
-			
-			</tr>
-			<tr>
-				<td>Type :</td>
-				<td><input type="text" name="type" value=""><br><%if(typeof errors != "undefined"){%>
-					<% errors.forEach(function(err){ %>
-					<% if(err.param == 'type') {%>
-						<%= err.msg %>
-						<% } %>
-					 <% }); %>
-					<% } %></td>
-			
-			
-			</tr>
-				<tr>
-			
-				<td></td>
-				<td><input type="submit" name="submit" value="Update"></td>
-			</tr>
-		</table>
-		
-	</form>
-
-</body>
-
+		</tr>
+		<% for(var i=0; i < userlist.length; i++){ %>
+		<tr>
+			<td><%= userlist[i].id %></td>
+			<td><%= userlist[i].username %></td>
+			<td><%= userlist[i].password %></td>
+			<td><%= userlist[i].type %></td>
+			<td><%= userlist[i].contact %></td>
+			<td>
+				 
+				<a href="/home/add/<%= userlist[i].id %>">Add</a>  
+			</td>
+		</tr>
+		<% } %>
+	</table>
+	
 </html>

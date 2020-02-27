@@ -44,13 +44,26 @@ module.exports ={
 		});
 	},
 	getAll:function(callback){
-		var t='employee';
-		var sql = "select * from user where type='"+t+"'";
+		var t='customer';
+		var n=1;
+		var sql = "select * from user where type='"+t+"' and num='"+n+"'";
 		db.getResult(sql, null, function(results){
 			if(results.length > 0){
 				callback(results);
 			}else{
 				callback(null);
+			}
+		});
+	},
+	getAll2:function(callback){
+		var t1='customer';
+		var n1=0;
+		var sql = "select * from user where type='"+t1+"' and num='"+n1+"'";
+		db.getResult(sql, null, function(results){
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(0);
 			}
 		});
 	},
@@ -98,6 +111,19 @@ module.exports ={
 	update: function(user, callback){
 		var sql = "update user set username=?,uname=?,password=?,contact=?,type=? where id=?";
 		db.execute(sql, [user.username, user.uname,user.password,user.contact, user.type, user.id], function(status){
+			if(status){
+				callback(true);
+			}else{
+				callback(false);
+			}
+		});
+	},
+
+
+	update2: function(user, callback){
+		var sql = "update user set num=? where id=?";
+		var num=1;
+		db.execute(sql, [num, user.id], function(status){
 			if(status){
 				callback(true);
 			}else{

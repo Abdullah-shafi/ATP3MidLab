@@ -63,32 +63,40 @@ router.get('/vp', function(req, res){
 
 
 
-router.get('/edit/:id', function(req, res){
-	
-	userModel.getById(req.params.id, function(result){
-		res.render('home/edit', {user: result});
-	});
-})
-
-router.post('/edit/:id', function(req, res){
-	
-	var user = {
-		username: req.body.username,
-		password: req.body.password,
-		 uname : req.body.uname,
-		 contact : req.body.contact,
-		id: req.params.id
-	};
-
-	userModel.update(user, function(status){
-		if(status){
-			res.redirect('/home/alluser');
+router.get('/adduser', function(req, res){
+	userModel.getAll2(function(results){
+		if(results.length > 0){
+			res.render('home/adduser', {userlist: results});
 		}else{
-			res.redirect('/home/edit/'+req.params.id);
+			res.send('No request'); 
 		}
 	});
 })
 
+
+
+router.get('/add/:id', function(req, res){
+	
+	userModel.getById(req.params.id, function(result){
+		res.render('home/add', {user: result});
+	});
+})
+
+router.post('/add/:id', function(req, res){
+	
+	var user = {
+		 id:req.params.id
+		 
+	};
+
+	userModel.update2(user, function(status){
+		if(status){
+			res.redirect('/home/alluser');
+		}else{
+			res.redirect('/home/adduser/'+req.params.id);
+		}
+	});
+})
 
 router.get('/delete/:id', function(req, res){
 	
@@ -192,52 +200,8 @@ router.post('/ap', function(req, res){
 	}
 
 })
-router.get('/adduser', function(req, res){
-	
-	res.render('home/adduser');
-
-})
-
-router.post('/adduser', function(req, res){
-
-// var user = {
-// 	username: req.body.username,
-// 	password: req.body.password,
-// 	type: req.body.type
-// };
-
-req.checkBody('username', 'Name field cannot be empty.').notEmpty();
-//req.checkBody('username', "Username can only must include one lowercase character, one uppercase character,").matches(/^[A-Za-z_-]+$/, "i");
-req.checkBody('password', 'Password must be between 8-60 characters long.').len(4, 60);
-//req.checkBody('password', "Password must include one lowercase character, one uppercase character, a number").matches(/^[A-Za-z0-9_-]+$/, "i");
-req.checkBody('type', 'Type field cannot be empty.').notEmpty();
-req.checkBody('contact', 'contact field cannot be empty.').notEmpty();
-req.checkBody('uname', 'Username field cannot be empty.').notEmpty();
 
 
-const err = req.validationErrors();
 
-if(err){		
-res.render('home/adduser', {errors: err});
-//console.log(err);
-}else{
-var user = {
-username: req.body.username,
-uname: req.body.uname,
-password: req.body.password,
-contact: req.body.contact,
-type: req.body.type
-};
-userModel.insert(user, function(status){
-	if(status){
-		res.redirect('/home/alluser');
-	}else{
-		res.redirect('/home/adduser');
-	}
-});
-//res.send('login successful');
-}
-
-})
 module.exports = router;
 
