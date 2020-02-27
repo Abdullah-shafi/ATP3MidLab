@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>All Medicine</title>
+</head>
+<body>
+	<div>
+		<h1>Medicine List</h1> 		
+	</div>
+
+	<a href="/home"> Back</a> |
+	<a href="/home/addmedicine"> Add Medicine</a> |
+	<a href="/logout"> logout</a><br>
+	
+	
+	
+	<table id="medicine" border="1">
+		<tr>
+			<td>ID</td>
+			<td>Name</td>
+			
+			<td>Category</td>
+			<td>Quantity</td>
+			<td>Type</td>
+			<td>Price</td>
+			<td>Vendor Name</td>
+			<td>Action</td>
+			
+			
+		</tr>
+		<% for(var i=0; i < userlist.length; i++){ %>
+		<tr>
+			<td><%= userlist[i].product_id %></td>
+			<td><%= userlist[i].product_name %></td>
+			<td><%= userlist[i].p_category %></td>
+			<td><%= userlist[i].product_qty %></td>
+			<td><%= userlist[i].product_type %></td>
+			<td><%= userlist[i].price %></td>
+			<td><%= userlist[i].vendor_name %></td>
+
+			<td>
+				 
+				<a href="/home/edit_medicine/<%= userlist[i].product_id %>">Edit</a> |  
+				<a href="/home/deletemedicine/<%= userlist[i].product_id %>">DELETE</a>  
+			</td>
+		</tr>
+		<% } %>
+	</table>
+	
+</html>

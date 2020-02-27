@@ -51,15 +51,7 @@ router.get('/alluser', function(req, res){
 		}
 	});
 })
-router.get('/vp', function(req, res){
-	userModel.vp(function(results){
-		if(results.length > 0){
-			res.render('home/vp', {userlist: results});
-		}else{
-			res.send('invalid username/password');
-		}
-	});
-})
+
 
 
 
@@ -116,72 +108,32 @@ router.post('/delete/:id', function(req, res){
 	});
 })
 
-router.get('/dp/:id', function(req, res){
+router.get('/deletemedicine/:id', function(req, res){
 	
-	userModel.getById(req.params.id, function(result){
-		res.render('home/dp', {user: result});
+	userModel.getById_medicine(req.params.id, function(result){
+		res.render('home/deletemedicine', {user: result});
 	});
 })
 
-router.post('/dp/:id', function(req, res){
+router.post('/deletemedicine/:id', function(req, res){
 	
-	userModel.dp(req.params.id, function(status){
+	userModel.deletemedicine(req.params.id, function(status){
 		if(status){
-			res.redirect('/home/vp');
+			res.redirect('/home/allmedicine');
 		}else{
-			res.redirect('/home/dp/'+req.params.id);
+			res.redirect('/home/deletemedicine/'+req.params.id);
 		}
 	});
 })
 
-router.get('/ep/:id', function(req, res){
-	
-	userModel.ep(req.params.id, function(result){
-		res.render('home/ep', {user: result});
-	});
-})
 
-router.post('/ep/:id', function(req, res){
+router.get('/addmedicine', function(req, res){
 	
-	var user = {
-		product_name: req.body.product_name,
-		quantity: req.body.quantity,
-		 price : req.body.price,
-		 id:req.body.id
-		 
-	};
-
-	userModel.epu(user, function(status){
-		if(status){
-			res.redirect('/home/vp');
-		}else{
-			res.redirect('/home/ep/'+req.params.id);
-		}
-	});
-})
-router.get('/ap', function(req, res){
-	
-			res.render('home/ap');
+			res.render('home/addmedicine');
 	
 })
 
-router.post('/ap', function(req, res){
-	
-	
-	
-	req.checkBody('name', 'Name field cannot be empty.').notEmpty();
-	
-	req.checkBody('price', 'Price must be between 8-60 characters long.').notEmpty();
-	
-	req.checkBody('quantity', 'Quantity field cannot be empty.').notEmpty();
-	
-	
-	const err = req.validationErrors();
-
-	if(err){		
-		res.render('home/ap', {errors: err});
-		//console.log(err);
-	}else{
+router.post('/addmedicine', function(req, res){
 		var user = {
 		product_name: req.body.name,
 		quantity: req.body.quantity,
@@ -191,16 +143,25 @@ router.post('/ap', function(req, res){
 	};
 		userModel.pi(user, function(status){
 			if(status){
-				res.redirect('/home/vp');
+				res.redirect('/home/viewmedicine');
 			}else{
-				res.redirect('/home/ap');
+				res.redirect('/home/addmedicine');
 			}
 		});
 		//res.send('login successful');
-	}
+
 
 })
 
+router.get('/allmedicine', function(req, res){
+	userModel.getAll3(function(results){
+		if(results.length > 0){
+			res.render('home/allmedicine', {userlist: results});
+		}else{
+			res.send('invalid username/password');
+		}
+	});
+})
 
 
 module.exports = router;

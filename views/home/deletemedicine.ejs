@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Delete Medicine</title>
+</head>
+<body>
+	<div>
+		<h1>Delete Medicine!</h1> 		
+	</div>
+
+	<a href="/home/allmedicine"> Back to List</a> |
+	<a href="/logout"> logout</a><br>
+
+	<form method="post">
+		<table>
+			<tr>
+				<td>Product_id</td>
+				<td><%=user.product_id%></td>
+			</tr>
+			<tr>
+				<td>Username</td>
+				<td><%=user.product_name%></td>
+			</tr>
+			<tr>
+				<td>Category :</td>
+				<td><%=user.p_category%></td>
+			</tr>
+			<tr>
+				<td>Quantity :</td>
+				<td><%=user.product_qty%></td>
+			</tr>
+
+             <tr>
+				<td>Type :</td>
+				<td><%=user.product_type%></td>
+			</tr>
+
+			<tr>
+				<td>Price :</td>
+				<td><%=user.price%></td>
+			</tr>
+			<tr>
+				<td>Vendor Name :</td>
+				<td><%=user.vendor_name%></td>
+			</tr> 
+
+
+
+			<tr>
+				<td><h3>Are you sure? </h3></td>
+				<td><input type="submit" name="submit" value="confirm"></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

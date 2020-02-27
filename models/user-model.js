@@ -11,8 +11,8 @@ module.exports ={
 			}
 		});
 	},
-	ep: function(id, callback){
-		var sql = "select * from product where id=?";
+	getById_medicine: function(id, callback){
+		var sql = "select * from medicine where product_id=?";
 		db.getResult(sql, [id], function(result){
 			if(result.length > 0){
 				callback(result[0]);
@@ -67,6 +67,17 @@ module.exports ={
 			}
 		});
 	},
+	getAll3:function(callback){
+		
+		var sql = "select * from medicine";
+		db.getResult(sql, null, function(results){
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(0);
+			}
+		});
+	},
 	vp:function(callback){
 		
 		var sql = "select * from product";
@@ -98,8 +109,8 @@ module.exports ={
 			}
 		});
 	},
-	dp: function(id, callback){
-		var sql = "delete from product where id=?";
+	deletemedicine: function(id, callback){
+		var sql = "delete from medicine where product_id=?";
 		db.execute(sql, [id], function(status){
 			if(status){
 				callback(true);
@@ -108,6 +119,7 @@ module.exports ={
 			}
 		});
 	},
+	
 	update: function(user, callback){
 		var sql = "update user set username=?,uname=?,password=?,contact=?,type=? where id=?";
 		db.execute(sql, [user.username, user.uname,user.password,user.contact, user.type, user.id], function(status){
